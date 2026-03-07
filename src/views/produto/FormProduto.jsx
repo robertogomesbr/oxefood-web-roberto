@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import MenuSistema from '../../MenuSistema';
 
@@ -8,9 +9,9 @@ export default function FormProduto() {
     const [titulo, setTitulo] = useState();
     const [codigo, setCodigo] = useState();
     const [descricao, setDescricao] = useState();
-    const [valor, setValor] = useState();
-    const [tempoMin, setTempoMin] = useState();
-    const [tempoMax, setTempoMax] = useState();
+    const [valorUnitario, setValor] = useState();
+    const [tempoDeEntregaMinimo, setTempoMin] = useState();
+    const [tempoDeEntregaMaximo, setTempoDeEntregaMaximo] = useState();
     
 
     function salvar() {
@@ -19,9 +20,9 @@ export default function FormProduto() {
             titulo: titulo,
             codigo: codigo,
             descricao: descricao,
-            valor: valor,
-            tempoMin: tempoMin,
-            tempoMax: tempoMax
+            valorUnitario: valorUnitario,
+            tempoDeEntregaMinimo: tempoDeEntregaMinimo,
+            tempoDeEntregaMaximo: tempoDeEntregaMaximo
         }
 
         axios.post("http://localhost:8080/api/produto", produtoRequest)
@@ -90,7 +91,7 @@ export default function FormProduto() {
                                     required
                                     fluid
                                     label='Valor Unitário'
-                                    value={valor}
+                                    value={valorUnitario}
                                     onChange={e => setValor(e.target.value)}
                                 />
 
@@ -98,7 +99,7 @@ export default function FormProduto() {
                                     fluid
                                     label='Tempo de Entrega Mínimo em Minutos'
                                     placeholder="30"
-                                    value={tempoMin}
+                                    value={tempoDeEntregaMinimo}
                                     onChange={e => setTempoMin(e.target.value)}
                                 />
 
@@ -106,8 +107,8 @@ export default function FormProduto() {
                                     fluid
                                     label='Tempo de Entrega Máximo em Minutos'
                                     placeholder="40"
-                                    value={tempoMax}
-                                    onChange={e => setTempoMax(e.target.value)}
+                                    value={tempoDeEntregaMaximo}
+                                    onChange={e => setTempoDeEntregaMaximo(e.target.value)}
                                 />
 
                             </Form.Group>
@@ -116,17 +117,19 @@ export default function FormProduto() {
 
                         <div style={{ marginTop: '4%' }}>
 
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Listar
-                            </Button>
+                            <Link to={'/list-produto'}>
+                                <Button
+                                    type="button"
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition='left'
+                                    color='orange'
+                                >
+                                    <Icon name='reply' />
+                                    Listar
+                                </Button>
+                            </Link>
 
                             <Button
                                 inverted

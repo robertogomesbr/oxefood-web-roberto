@@ -1,6 +1,7 @@
 import axios from "axios";
 import InputMask from 'comigo-tech-react-input-mask';
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
@@ -259,7 +260,7 @@ export default function FormEntregador() {
                                     options={opcoesEstados}
                                     placeholder='Selecione'
                                     value={enderecoUf}
-                                    onChange={e => setEnderecoUf(e.target.value)}
+                                    onChange={(e, {value}) => setEnderecoUf(value)}
                                 />
 
                             </Form.Group>
@@ -297,18 +298,20 @@ export default function FormEntregador() {
                         </Form>
 
                         <div style={{ marginTop: '4%' }}>
-
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Voltar
-                            </Button>
+                            
+                            <Link to={'/list-entregador'}>
+                                <Button
+                                    type="button"
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition='left'
+                                    color='orange'
+                                >
+                                    <Icon name='reply' />
+                                    Voltar
+                                </Button>
+                            </Link>
 
                             <Button
                                 inverted

@@ -19,6 +19,7 @@ export default function ListCliente() {
                 setLista(response.data)
             })
     }
+
     function formatarData(dataParam) {
 
         if (dataParam === null || dataParam === '' || dataParam === undefined) {
@@ -28,6 +29,7 @@ export default function ListCliente() {
         let arrayData = dataParam.split('-');
         return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
     }
+    
     return (
         <div>
             <MenuSistema tela={'cliente'} />
@@ -81,7 +83,7 @@ export default function ListCliente() {
                                                 color='green'
                                                 title='Clique aqui para editar os dados deste cliente'
                                                 icon>
-                                                <Icon name='edit' />
+                                                    <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
                                             </Button> &nbsp;
                                             <Button
                                                 inverted

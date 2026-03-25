@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import MenuSistema from '../../MenuSistema';
+import { notifyError, notifySuccess } from '../../views/util/Util';
 
 export default function FormProduto() {
 
@@ -14,19 +15,19 @@ export default function FormProduto() {
     const [valorUnitario, setValorUnitario] = useState();
     const [tempoDeEntregaMinimo, setTempoDeEntregaMinimo] = useState();
     const [tempoDeEntregaMaximo, setTempoDeEntregaMaximo] = useState();
-    
+
     useEffect(() => {
         if (state != null && state.id != null) {
             axios.get("http://localhost:8080/api/produto/" + state.id)
-            .then((response) => {
-                setIdProduto(response.data.id)
-                setTitulo(response.data.titulo)
-                setCodigo(response.data.codigo)
-                setDescricao(response.data.descricao)
-                setValorUnitario(response.data.valorUnitario)
-                setTempoDeEntregaMinimo(response.data.tempoDeEntregaMinimo)
-                setTempoDeEntregaMaximo(response.data.tempoDeEntregaMaximo)
-            })
+                .then((response) => {
+                    setIdProduto(response.data.id)
+                    setTitulo(response.data.titulo)
+                    setCodigo(response.data.codigo)
+                    setDescricao(response.data.descricao)
+                    setValorUnitario(response.data.valorUnitario)
+                    setTempoDeEntregaMinimo(response.data.tempoDeEntregaMinimo)
+                    setTempoDeEntregaMaximo(response.data.tempoDeEntregaMaximo)
+                })
         }
     }, [state])
 
@@ -43,12 +44,28 @@ export default function FormProduto() {
 
         if (idProduto != null) {
             axios.put("http://localhost:8080/api/produto/" + idProduto, produtoRequest)
-            .then((response) => { console.log("Produto alterado com sucesso.") })
-            .catch((error) => { console.log("Erro ao alterar um produto.") })
+                .then((response) => { notifySuccess("Produto alterado com sucesso.") })
+                .catch((error) => {
+                    if (error.response.data.errors != undefined) {
+                        for (let i = 0; i < error.response.data.errors.length; i++) {
+                            notifyError(error.response.data.errors[i].defaultMessage)
+                        }
+                    } else {
+                        notifyError(error.response.data.message)
+                    }
+                })
         } else {
             axios.post("http://localhost:8080/api/produto", produtoRequest)
-            .then((response) => { console.log("Produto cadastrado com sucesso.") })
-            .catch((error) => { console.log("Erro ao incluir um produto.") })
+                .then((response) => { notifySuccess("Produto cadastrado com sucesso.") })
+                .catch((error) => {
+                    if (error.response.data.errors != undefined) {
+                        for (let i = 0; i < error.response.data.errors.length; i++) {
+                            notifyError(error.response.data.errors[i].defaultMessage)
+                        }
+                    } else {
+                        notifyError(error.response.data.message)
+                    }
+                })
         }
     }
 
@@ -62,11 +79,11 @@ export default function FormProduto() {
 
                 <Container textAlign="justified">
 
-                    { idProduto === undefined &&
-                        <h2> <span style={{color: "darkgray"}}> Produto &nbsp; <Icon name="angle double right" size="small"/> </span> Cadastro</h2>
+                    {idProduto === undefined &&
+                        <h2> <span style={{ color: "darkgray" }}> Produto &nbsp; <Icon name="angle double right" size="small" /> </span> Cadastro</h2>
                     }
-                    { idProduto != undefined &&
-                        <h2> <span style={{color: "darkgray"}}> Produto &nbsp; <Icon name="angle double right" size="small"/> </span> Alteração</h2>
+                    {idProduto != undefined &&
+                        <h2> <span style={{ color: "darkgray" }}> Produto &nbsp; <Icon name="angle double right" size="small" /> </span> Alteração</h2>
                     }
 
                     <Divider />

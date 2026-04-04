@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+import { notifyError, notifySuccess } from '../../views/util/Util';
 
 export default function ListCliente() {
 
@@ -43,7 +44,7 @@ export default function ListCliente() {
         await axios.delete('http://localhost:8080/api/cliente/' + idRemover)
             .then((response) => {
 
-                console.log('Cliente removido com sucesso.')
+                notifySuccess('Cliente removido com sucesso.')
 
                 axios.get("http://localhost:8080/api/cliente")
                     .then((response) => {
@@ -51,7 +52,13 @@ export default function ListCliente() {
                     })
             })
             .catch((error) => {
-                console.log('Erro ao remover um cliente.')
+                if (error.response.data.errors !== undefined) {
+                    for (let i = 0; i < error.response.data.errors.length; i++) {
+                        notifyError(error.response.data.errors[i].defaultMessage)
+                    }
+                } else {
+                    notifyError(error.response.data.message)
+                }
             })
         setOpenModal(false)
     }

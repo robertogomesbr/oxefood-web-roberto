@@ -8,6 +8,7 @@ import {
     Table,
 } from "semantic-ui-react";
 import MenuSistema from "../../MenuSistema";
+import { notifyError, notifySuccess } from '../../views/util/Util';
 
 export default function ListEntregador() {
 
@@ -48,7 +49,7 @@ export default function ListEntregador() {
         await axios.delete('http://localhost:8080/api/entregador/' + idRemover)
             .then((response) => {
 
-                console.log('Entregador removido com sucesso.')
+                notifySuccess('Entregador removido com sucesso.')
 
                 axios.get('http://localhost:8080/api/entregador')
                     .then((response) => {
@@ -56,7 +57,13 @@ export default function ListEntregador() {
                     })
             })
             .catch((error) => {
-                console.log('Erro ao remover entregador.')
+                if (error.response.data.errors !== undefined) {
+                    for (let i = 0; i < error.response.data.errors.length; i++) {
+                        notifyError(error.response.data.errors[i].defaultMessage)
+                    }
+                } else {
+                    notifyError(error.response.data.message)
+                }
             })
         setOpenModal(false)
     }
@@ -67,8 +74,14 @@ export default function ListEntregador() {
                 setEntregadorSelecionado(response.data)
                 setDadosModal(true)
             })
-            .catch(() => {
-                console.log('Erro ao buscar entregador.')
+            .catch((error) => {
+                if (error.response.data.errors !== undefined) {
+                    for (let i = 0; i < error.response.data.errors.length; i++) {
+                        notifyError(error.response.data.errors[i].defaultMessage)
+                    }
+                } else {
+                    notifyError(error.response.data.message)
+                }
             })
     }
 

@@ -13,7 +13,7 @@ export default function FormProduto() {
 
     useEffect(() => {
         if (state != null && state.id != null) {
-            axios.get("http://localhost:8080/api/categoriaProduto/" + state.id)
+            axios.get("http://localhost:8080/api/categoriaproduto/" + state.id)
                 .then((response) => {
                     setIdCategoriaProduto(response.data.id)
                     setDescricao(response.data.descricao)
@@ -28,7 +28,7 @@ export default function FormProduto() {
         }
 
         if (idCategoriaProduto != null) {
-            axios.put("http://localhost:8080/api/categoriaProduto/" + idCategoriaProduto, categoriaProdutoRequest)
+            axios.put("http://localhost:8080/api/categoriaproduto/" + idCategoriaProduto, categoriaProdutoRequest)
                 .then((response) => { notifySuccess("Categoria de produto alterado com sucesso.") })
                 .catch((error) => {
                     if (error.response.data.errors !== undefined) {
@@ -40,7 +40,7 @@ export default function FormProduto() {
                     }
                 })
         } else {
-            axios.post("http://localhost:8080/api/categoriaProduto", categoriaProdutoRequest)
+            axios.post("http://localhost:8080/api/categoriaproduto", categoriaProdutoRequest)
                 .then((response) => { notifySuccess("Categoria de produto cadastrado com sucesso.") })
                 .catch((error) => {
                     if (error.response.data.errors !== undefined) {

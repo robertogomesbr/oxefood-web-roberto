@@ -15,6 +15,8 @@ export default function FormProduto() {
     const [valorUnitario, setValorUnitario] = useState();
     const [tempoDeEntregaMinimo, setTempoDeEntregaMinimo] = useState();
     const [tempoDeEntregaMaximo, setTempoDeEntregaMaximo] = useState();
+    const [listaCategoria, setListaCategoria] = useState([]);
+    const [idCategoria, setIdCategoria] = useState();
 
     useEffect(() => {
         if (state != null && state.id != null) {
@@ -27,13 +29,22 @@ export default function FormProduto() {
                     setValorUnitario(response.data.valorUnitario)
                     setTempoDeEntregaMinimo(response.data.tempoDeEntregaMinimo)
                     setTempoDeEntregaMaximo(response.data.tempoDeEntregaMaximo)
+                    setIdCategoria(response.data.categoria.id)
                 })
         }
+
+        axios.get("http://localhost:8080/api/categoriaproduto")
+            .then((response) => {
+                const dropDownCategorias = response.data.map(c => ({ text: c.descricao, value: c.id }));
+                setListaCategoria(dropDownCategorias);
+            })
+
     }, [state])
 
     function salvar() {
 
         let produtoRequest = {
+            idCategoria: idCategoria,
             titulo: titulo,
             codigo: codigo,
             descricao: descricao,
@@ -116,6 +127,19 @@ export default function FormProduto() {
                                 />
 
                             </Form.Group>
+
+                            <Form.Select
+                                required
+                                fluid
+                                tabIndex='3'
+                                placeholder='Selecione'
+                                label='Categoria'
+                                options={listaCategoria}
+                                value={idCategoria}
+                                onChange={(e,{value}) => {
+                                    setIdCategoria(value)
+                                }}
+                            />
 
                             <Form.TextArea
                                 fluid

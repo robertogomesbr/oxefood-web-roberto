@@ -81,12 +81,13 @@ export default function ListProduto() {
 
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell>Título</Table.HeaderCell>
-                                    <Table.HeaderCell>Código do Produto</Table.HeaderCell>
+                                    <Table.HeaderCell>Código</Table.HeaderCell>
+                                    <Table.HeaderCell>Categoria</Table.HeaderCell>
+                                    <Table.HeaderCell>Título</Table.HeaderCell>                                   
                                     <Table.HeaderCell>Descrição</Table.HeaderCell>
                                     <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
-                                    <Table.HeaderCell>Tempo de Entrega Mínima em Min</Table.HeaderCell>
-                                    <Table.HeaderCell>Tempo de Entrega Máxima em Min</Table.HeaderCell>
+                                    <Table.HeaderCell>Tempo Mínimo de Entrega</Table.HeaderCell>
+                                    <Table.HeaderCell>Tempo Máximo de Entrega</Table.HeaderCell>
                                     <Table.HeaderCell textAlign="center">Ações</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
@@ -96,8 +97,9 @@ export default function ListProduto() {
                                 {lista.map(produto => (
 
                                     <Table.Row key={produto.id}>
-                                        <Table.Cell>{produto.titulo}</Table.Cell>
                                         <Table.Cell>{produto.codigo}</Table.Cell>
+                                        <Table.Cell>{produto.categoria?.descricao}</Table.Cell>
+                                        <Table.Cell>{produto.titulo}</Table.Cell>                                       
                                         <Table.Cell>{produto.descricao}</Table.Cell>
                                         <Table.Cell>{produto.valorUnitario}</Table.Cell>
                                         <Table.Cell>{produto.tempoDeEntregaMinimo}</Table.Cell>

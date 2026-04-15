@@ -89,25 +89,24 @@ export default function ListPromocao() {
 
     async function alterarValidade(promocao) {
 
-    const promocaoAtualizada = {
-        ...promocao,
-        promoValida: !promocao.promoValida
-    };
+        const promocaoAtualizada = {
+            ...promocao,
+            dataInicio: formatarData(promocao.dataInicio),
+            dataFim: formatarData(promocao.dataFim),
+            promoValida: !promocao.promoValida
+        };
 
-    await axios.put('http://localhost:8080/api/promocao/' + promocao.id, promocaoAtualizada)
+        await axios.put(
+            'http://localhost:8080/api/promocao/' + promocao.id,
+            promocaoAtualizada
+        )
         .then(() => {
             notifySuccess('Status da promoção atualizado com sucesso!');
             carregarLista();
         })
         .catch((error) => {
-            if (error.response.data.errors !== undefined) {
-                for (let i = 0; i < error.response.data.errors.length; i++) {
-                    notifyError(error.response.data.errors[i].defaultMessage)
-                }
-            } else {
-                notifyError(error.response.data.message)
-            }
-        })
+            notifyError(error.response.data.message);
+        });
     }
 
     return (

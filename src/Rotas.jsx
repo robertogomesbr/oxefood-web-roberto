@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from './views/util/ProtectedRoute';
 
 import FormCliente from './views/cliente/FormCliente';
 import ListCliente from "./views/cliente/ListCliente";
@@ -11,22 +12,28 @@ import ListCategoriaProduto from "./views/produto/ListCategoriaProduto";
 import ListProduto from "./views/produto/ListProduto";
 import FormPromocao from "./views/promocao/FormPromocao";
 import ListPromocao from "./views/promocao/ListPromocao";
+import FormEnderecoCliente from "./views/cliente/FormEnderecoCliente";
+import ListEnderecoCliente from "./views/cliente/ListEnderecoCliente";
+import FormLogin from "./views/login/FormLogin";
 
 function Rotas() {
     return (
         <>
             <Routes>
-                <Route path="/" element={ <Home/> } />
-                <Route path="form-cliente" element={ <FormCliente/> } />
-                <Route path="form-produto" element={ <FormProduto/> } />
-                <Route path="form-entregador" element={ <FormEntregador/> } />
-                <Route path="form-categoria-produto" element={ <FormCategoriaProduto/> }/>
-                <Route path="list-categoria-produto" element={ <ListCategoriaProduto/> }/>
-                <Route path="list-cliente" element={<ListCliente />}/>
-                <Route path="list-produto" element={<ListProduto />}/>
-                <Route path="list-entregador" element={<ListEntregador />}/>
-                <Route path="form-promocao" element={<FormPromocao />}/>
-                <Route path="list-promocao" element={<ListPromocao />}/>
+                <Route path="/" element={<FormLogin />} />
+                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+                <Route path="form-cliente" element={<FormCliente />} />
+                <Route path="form-endereco-cliente" element={<FormEnderecoCliente />} />
+                <Route path="form-produto" element={<ProtectedRoute><FormProduto /></ProtectedRoute>} />
+                <Route path="form-entregador" element={<ProtectedRoute><FormEntregador /></ProtectedRoute>} />
+                <Route path="form-categoria-produto" element={<ProtectedRoute><FormCategoriaProduto /></ProtectedRoute>} />
+                <Route path="list-categoria-produto" element={<ProtectedRoute><ListCategoriaProduto /></ProtectedRoute>} />
+                <Route path="/list-cliente" element={<ProtectedRoute><ListCliente /></ProtectedRoute>}/>
+                <Route path="list-endereco-cliente" element={<ListEnderecoCliente />} />
+                <Route path="list-produto" element={<ProtectedRoute><ListProduto /></ProtectedRoute>} />
+                <Route path="list-entregador" element={<ProtectedRoute><ListEntregador /></ProtectedRoute>} />
+                <Route path="form-promocao" element={<ProtectedRoute><FormPromocao /></ProtectedRoute>} />
+                <Route path="list-promocao" element={<ProtectedRoute><ListPromocao /></ProtectedRoute>} />
             </Routes>
         </>
     )

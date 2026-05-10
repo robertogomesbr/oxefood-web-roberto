@@ -113,6 +113,30 @@ export default function ListCliente() {
                                             <Button
                                                 inverted
                                                 circular
+                                                color='pink'
+                                                title='Clique aqui para cadastrar um endereço'
+                                                icon>
+                                                <Link
+                                                    to="/form-endereco-cliente"
+                                                    state={{ clienteId: cliente.id }}
+                                                    style={{ color: 'pink' }}
+                                                >
+                                                    <Icon name='book' />
+                                                </Link>
+                                            </Button>
+
+                                            <Button
+                                                inverted
+                                                circular
+                                                color='purple'
+                                                title='Clique aqui para editar um endereço'
+                                                icon>
+                                                <Link to="/list-endereco-cliente" state={{ id: cliente.id }} style={{ color: 'purple' }}> <Icon name='book' /> </Link>
+                                            </Button>
+
+                                            <Button
+                                                inverted
+                                                circular
                                                 color='green'
                                                 title='Clique aqui para editar os dados deste cliente'
                                                 icon>
